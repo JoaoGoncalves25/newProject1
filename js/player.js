@@ -4,7 +4,7 @@ class Player {
     this.gameScreen = gameScreen;
 
     // Position Values
-    this.left = 240;
+    this.left = 255;
     this.top = top/2 + 25;
 
     // Player Dimension Values
