@@ -31,6 +31,9 @@ window.onload = function () {
            // break;
           case " ":
             game.player.directionY = -1;
+            const wingsSound = document.querySelector("#wings-sfx");
+            wingsSound.play();
+            wingsSound.volume = 2;
             break;
           //case "ArrowRight":
            // game.player.directionX = 0;

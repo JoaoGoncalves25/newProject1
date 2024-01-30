@@ -5,7 +5,8 @@ class Game {
     this.startScreen = document.getElementById("game-intro");
     this.gameScreen = document.getElementById("game-screen");
     this.gameEndScreen = document.getElementById("game-end");
-
+    
+    
     // I am going to create a player in the future. For this moment of the code-along, I'll leave it to null.
     this.player = new Player(
       this.gameScreen,
@@ -28,8 +29,15 @@ class Game {
     // Score
     this.score = 0;
 
+    let highestScore = localStorage.getItem("highestScore");
+    let highScore = document.getElementById("high-score");
+    highScore.innerHTML = highestScore;
+    if (!highestScore || highestScore && this.score > highestScore) {
+        localStorage.setItem("highestScore", this.score);}
+
+
     // Lives
-    this.lives = 1;
+    this.lives = 3;
 
     // Variable to Check If I'm in the Process of Creating an Obstacle
     this.isPushingObstacle = false;
@@ -37,6 +45,10 @@ class Game {
 
     // Variable to Check if the Game is Over
     this.gameIsOver = false;
+
+    // Sound
+  this.backgroundMusic = document.querySelector("#background-music")
+  this.hitSound = document.querySelector("#hit-sfx")
   }
 
   createObstacle() {
@@ -57,6 +69,9 @@ class Game {
 
     //Shows the game screen.
     this.gameScreen.style.display = "block";
+
+    this.backgroundMusic.play();
+    this.backgroundMusic.volume = 0.5;
 
     //Starts the game loop
     this.gameLoop();
@@ -91,6 +106,7 @@ class Game {
       obstacle.move();
   
       if (this.player.didCollide(obstacle)) {
+        this.hitSound.play();
         obstacle.element.remove();
         this.obstacles.splice(i, 1);
         this.lives--;
@@ -130,6 +146,7 @@ class Game {
       cloud.move();
 
       if (this.player.didCollide(cloud)) {
+        this.hitSound.play();
         cloud.element.remove();
         this.clouds.splice(i, 1);
         this.lives--;
@@ -163,16 +180,28 @@ class Game {
       obstacle.element.remove();
     });
 
-         this.clouds.forEach((cloud)=>{
+     this.clouds.forEach((cloud)=>{
       // Remove the Obstacle from JS
 
       // Remove the obstacle from HTML
       cloud.element.remove()
       }); 
 
+    // Stop background music  
+    this.backgroundMusic.pause();
+
     // Hide the current game screen
     this.gameScreen.style.display = "none";
+    
     // In order, to display the game end screen
     this.gameEndScreen.style.display = "block";
+
+    // Display High Score
+    const highestScore = localStorage.getItem("highestScore");
+    let highScore = document.getElementById("high-score");
+    highScore.innerHTML = highestScore;
+    if (!highestScore || highestScore && this.score > highestScore) {
+        localStorage.setItem("highestScore", this.score);}
+
   }
 }
