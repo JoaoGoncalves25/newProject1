@@ -8,8 +8,13 @@ class Game {
 
     // I am going to create a player in the future. For this moment of the code-along, I'll leave it to null.
     this.player = new Player(
-      this.gameScreen,200,500,100,150,"./images/pidgeon.png");
-
+      this.gameScreen,
+      200,
+      500,
+      100,
+      150,
+      "./images/pidgeon.png"
+    );
 
     // Style for the Game Board
     this.height = 563;
@@ -34,6 +39,14 @@ class Game {
     this.gameIsOver = false;
   }
 
+  createObstacle() {
+    this.obstacles.push(new Obstacle(this.gameScreen));
+  }
+
+  createCloud() {
+    this.clouds.push(new Cloud(this.gameScreen));
+  }
+
   start() {
     //Sets the height and width of the game screen.
     this.gameScreen.style.height = `${this.height}px`;
@@ -53,8 +66,13 @@ class Game {
     if (this.gameIsOver) {
       return;
     }
-
+ 
     this.update();
+    this.updateCloud();
+
+    if(this.lives===0){
+      this.endGame();
+    }
 
     window.requestAnimationFrame(() => this.gameLoop());
   }
@@ -63,95 +81,98 @@ class Game {
     /* Score, Lives ScoreBoard */
     let score = document.getElementById("score");
     let lives = document.getElementById("lives");
-
-    /* Every Frame of the Game, I want to check if the car is moving */
+  
+    /* Every Frame of the Game, I want to check if the player is moving */
     this.player.move();
-
+  
     // Iterate over the obstacles array and make them move
     for (let i = 0; i < this.obstacles.length; i++) {
       const obstacle = this.obstacles[i];
       obstacle.move();
-
+  
       if (this.player.didCollide(obstacle)) {
         obstacle.element.remove();
-
         this.obstacles.splice(i, 1);
-
         this.lives--;
-
-      } else if (obstacle.left === - 300) {
+      } else if (obstacle.left === -300) {
         this.score++;
-
+  
         // Remove the Obstacle HTML Element from the HTML.
         obstacle.element.remove();
-
+  
         // Remove the Obstacle from the Game Class'obstacles array.
         this.obstacles.splice(i, 1);
       }
     }
+  
+    // Generate new obstacle periodically
+    if (!this.isPushingObstacle) {
+      this.isPushingObstacle = true;
+      setTimeout(() => {
+        this.createObstacle();
+        this.isPushingObstacle = false;
+      }, 1200); // Adjust the time interval as needed
+    }
+  
+    score.innerHTML = this.score;
+    lives.innerHTML = this.lives;
+  }
+  
 
-/*     for (let i = 0; i < this.clouds.length; i++) {
+  updateCloud() {
+    let score = document.getElementById("score");
+    let lives = document.getElementById("lives");
+
+    this.player.move();
+
+    for (let i = 0; i < this.clouds.length; i++) {
       const cloud = this.clouds[i];
       cloud.move();
 
       if (this.player.didCollide(cloud)) {
-        cloud.element.removecloud
+        cloud.element.remove();
         this.clouds.splice(i, 1);
-
         this.lives--;
-
-      } else if (cloud.left === - 500) {
+      } else if (cloud.left === -300) {
         this.score++;
 
-        // Remove the Obstacle HTML Element from the HTML.
         cloud.element.remove();
 
-        // Remove the Obstacle from the Game Class'obstacles array.
         this.clouds.splice(i, 1);
       }
+    }
 
-      if(this.lives === 0){
-        this.endGame();
-      }
-
-    // If there are no obstacles, push a new one after 1second and half.
-    else if (!this.obstacles.length && !this.isPushingObstacle) {
-      this.isPushingObstacle = true;
-      setTimeout(() => {
-        this.obstacles.push(new Obstacle(this.gameScreen));
-        this.isPushingObstacle = false;
-      }, 10);
-
+    if (!this.clouds.length) {
+      this.createCloud();
     }
 
     score.innerHTML = this.score;
     lives.innerHTML = this.lives;
-  } */
-}
+  }
 
-  endGame(){
-    //Change the gameIsOver status, if it's true, remmeber that this is going to break the animation loop
+  endGame() {
+    //Change the gameIsOver status, if it's true, remember that this is going to break the animation loop
     this.gameIsOver = true;
     // Remove Player
     this.player.element.remove();
     // Remove all obstacles
-    this.obstacles.forEach((obstacle)=>{
-    // Remove the Obstacle from JS
-    
-    // Remove the obstacle from HTML
-    obstacle.element.remove()
+    this.obstacles.forEach((obstacle) => {
+      // Remove the Obstacle from JS
+
+      // Remove the obstacle from HTML
+      obstacle.element.remove();
     });
 
-/*     this.clouds.forEach((cloud)=>{
+         this.clouds.forEach((cloud)=>{
       // Remove the Obstacle from JS
-      
+
       // Remove the obstacle from HTML
       cloud.element.remove()
-      }); */
+      }); 
 
     // Hide the current game screen
     this.gameScreen.style.display = "none";
     // In order, to display the game end screen
     this.gameEndScreen.style.display = "block";
   }
-  }
+}

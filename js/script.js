@@ -30,7 +30,7 @@ window.onload = function () {
            //game.player.directionX = 0;
            // break;
           case " ":
-            game.player.directionY = -2;
+            game.player.directionY = -1;
             break;
           //case "ArrowRight":
            // game.player.directionX = 0;
@@ -54,7 +54,7 @@ window.onload = function () {
            // game.player.directionX = 0;
            // break;
           case " ":
-            game.player.directionY = 1;
+            game.player.directionY = 0.50;
             break;
           //case "ArrowRight":
            // game.player.directionX = 0;

@@ -3,7 +3,7 @@ class Cloud {
       this.gameScreen = gameScreen;
   
       // Random Position
-      this.top = Math.floor(Math.random()*275 + 100);
+      this.top = Math.floor(Math.random() * 288 );
   
       this.left = 822;
       this.width = 200;
@@ -23,7 +23,7 @@ class Cloud {
   
     move() {
       // Move obstacle down
-      this.left -= 2;
+      this.left -= 1;
   
       this.updatePosition();
     }
@@ -33,3 +33,4 @@ class Cloud {
       this.element.style.top = `${this.top}px`;
     }
   }
+  

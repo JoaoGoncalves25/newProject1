@@ -23,7 +23,7 @@ class Obstacle {
 
   move() {
     // Move obstacle down
-    this.left -= 2;
+    this.left -= 3;
 
     this.updatePosition();
   }
@@ -33,8 +33,3 @@ class Obstacle {
     this.element.style.top = `${this.top}px`;
   }
 }
- 
-
-
-
-
