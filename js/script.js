@@ -1,4 +1,8 @@
 window.onload = function () {
+  let highScore = localStorage.getItem("highScore");
+  let highScoreElement = document.getElementById("high-score");
+  highScoreElement.innerHTML = highScore
+  
   const startButton = document.getElementById("start-button");
   const restartButton = document.getElementById("restart-button");
   let game;
@@ -9,7 +13,8 @@ window.onload = function () {
 
   restartButton.addEventListener("click", function(){
     // JS, in the current tab is ggoing to refresh (reload) the page
-    location.reload();
+    game = new Game();
+    game.start();
   });
 
   function startGame() {

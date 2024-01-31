@@ -14,15 +14,16 @@
         <img src="./images/pidgeon.png" alt="" class="logo-img" />
         <br />
         <button id="start-button">Start Game</button>
-        <p>Use the Space bar to take flight!</p>
-        <img src="./images/spaceBar.png" alt="" class="arrows-img" />
+        <p id="spacebar">Use the Space bar to take flight!</p>
+        
       </div>
 
-      <div id="game-container">
-        <div>
+      <article id="game-container">
+        <div id="score-board">
           <h2>Stats</h2>
           <p>Score: <span id="score">0</span></p>
           <p>Lives: <span id="lives">3</span></p>
+          <p>High Score: <span id="high-score">0</span></p>
         </div>
           <!-- #game-screen is initially hidden using CSS style display: none -->
           <div id="game-screen"></div>
@@ -35,12 +36,11 @@
           <audio id="patada" src="sound/patada.mp3"></audio>
           <audio id="espetaculo" src="sound/espetaculo.mp3"></audio>
           <audio id="perdeu" loop src="sound/perdeu.mp3"></audio>
-        </div>
+      </article>
 
       <!-- #game-end is initially hidden using CSS style display: none -->
       <div id="game-end">
         <div class="tenor-gif-embed" data-postid="3915565" data-share-method="host" data-aspect-ratio="1.77778" data-width="100%"><a href="https://tenor.com/view/the-office-spill-chili-pot-kevin-malone-gif-3915565">Spilled Chili - The Office GIF</a>from <a href="https://tenor.com/search/the+office-gifs">The Office GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-        <h1>Don't quit your day job</h1>
         <br />
         <button id="restart-button">Wanna go again?</button>
       </div>

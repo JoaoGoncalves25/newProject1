@@ -72,7 +72,7 @@ class Game {
 
     //Hides the start screen.
     this.startScreen.style.display = "none";
-
+    this.gameEndScreen.style.display = "none";
     //Shows the game screen.
     this.gameScreen.style.display = "block";
 
@@ -83,9 +83,7 @@ class Game {
     this.gameLoop();
 
 
-// STAR
-    // pushes one star in a static location
-    // included in start() method so it only pushes one star at a time 
+// Bonus
     setInterval(() => {
       this.bonuses.push(new Bonus(this.gameScreen));
       this.isPushingBonus = false;
@@ -152,7 +150,6 @@ class Game {
     }, 1200); // Adjust the time interval as needed
   }
 
-  
         // CHECK FOR COLLISIONS WITH cloud
         for (let i = 0; i < this.clouds.length; i++) {
           const singleCloud = this.clouds[i];
@@ -174,8 +171,10 @@ class Game {
     
             // check if the obstacle id off the screen at the bottom
           } else if (singleCloud.left === -300) {
+
             // remove the obstacle from the HTML
             singleCloud.element.remove();
+            
             // remove the obstales from the array of obstacles
             this.clouds.splice(i, 1);
           }
@@ -199,7 +198,6 @@ class Game {
 
       if (this.player.didCollide(singleBonus)) {
         if (this.bonuses) {
-          console.log("crashed with a star");
 
           // music for the star
           this.espetaculoSound.play();
@@ -258,9 +256,13 @@ class Game {
     this.gameEndScreen.style.display = "block";
 
     // Display High Score
-    const highestScore = localStorage.getItem("highestScore");
-        if (!highestScore || highestScore && this.score > highestScore) {
-            localStorage.setItem("highestScore", this.score);
-        }
+    let highScore = localStorage.getItem("highScore");
+    let highScoreElement = document.getElementById("high-score");
+    
+    if (!highScore || highScore && this.score > highScore) {
+      localStorage.setItem("highScore", this.score);
+      highScoreElement.innerHTML = this.score; 
+    
+    }
   }
 }

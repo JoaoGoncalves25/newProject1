@@ -5,6 +5,7 @@
 body {
   padding: 0;
   text-align: center;
+  background-image: url(../images/tile.png);
 }
 
 #game-intro {
@@ -26,7 +27,7 @@ body {
   position: relative;
   background-image: url(../images/lisbon.png);
   background-size: cover;
-  opacity: 0.6;
+  border-radius: 15px;
 }
 
 @keyframes slide {
@@ -51,7 +52,7 @@ body {
 }
 
 .logo-img {
-  width: 350px;
+  width: 300px;
 }
 
 .arrows-img {
@@ -60,17 +61,40 @@ body {
 
 body button {
   font-size: 30px;
-  background-color: #870007;
+  background-color:#2596be;
   color: #fff;
   padding: 20px 40px;
   border: 0;
   box-shadow: 0;
-  border-radius: 5px;
+  border-radius: 15px;
   margin-bottom: 20px;
+  border: 5px solid white;
 }
 
 .tenor-gif-embed{
   display: block;
   margin: auto;
   max-width: 40%;
+}
+
+#score-board{
+  background-color:#2596be;
+  color: #fff;
+  padding: 2px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 15px;
+  border: 5px solid white;
+}        
+
+#spacebar{
+  font-size: 20px;
+  background-color:#2596be;
+  color: #fff;
+  padding: 20px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  border: 5px solid white;
 }
