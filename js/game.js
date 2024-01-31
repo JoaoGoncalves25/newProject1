@@ -78,7 +78,7 @@ class Game {
     this.gameScreen.style.display = "block";
 
     //Background music
-    this.backgroundMusic.play();
+   /* this.backgroundMusic.play(); */
 
     //Starts the game loop
     this.gameLoop();
