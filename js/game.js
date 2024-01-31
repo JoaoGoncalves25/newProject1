@@ -50,6 +50,7 @@ class Game {
     this.patadaSound = document.querySelector("#patada");
     this.espetaculoSound = document.querySelector("#espetaculo");
     this.perdeuSound = document.querySelector("#perdeu");
+    this.hawkSound = document.querySelector("#hawk");
   }
 
   createTram() {
@@ -82,6 +83,9 @@ class Game {
     //Starts the game loop
     this.gameLoop();
 
+    this.gameIntervalId = setInterval(() => {
+      this.gameLoop()
+    }, this.gameLoopFrequency)
 
 // Bonus
     setInterval(() => {
@@ -98,11 +102,13 @@ class Game {
  
     this.update();
 
-    if(this.lives===0){
+    if(this.lives===-1){
       this.endGame();
     }
 
-    window.requestAnimationFrame(() => this.gameLoop());
+    if (this.gameIsOver) {
+      clearInterval(this.gameIntervalId)
+    }
   }
 
   update() {
@@ -154,11 +160,12 @@ class Game {
         for (let i = 0; i < this.clouds.length; i++) {
           const singleCloud = this.clouds[i];
           singleCloud.move();
-    
+          
           if (this.player.didCollide(singleCloud)) {
-
+            
             // music for the cloud
-            this.dmgSound.play();
+            this.hawkSound.loop= false;
+            this.hawkSound.play();
             
             // remove the obstacle from the DOM
             singleCloud.element.remove();
@@ -175,19 +182,21 @@ class Game {
             // remove the obstacle from the HTML
             singleCloud.element.remove();
             
+            
             // remove the obstales from the array of obstacles
             this.clouds.splice(i, 1);
           }
         }
     
         //The function below checks if there is no obstacle being pushed (false) and that no obstacles are currently on the screen (this.obstacles = 0) If these are true, then the following happens (the flag to true, a new Object class of obstacle is created and added to the this.obstacles array, and the flag is turned back to false)
-        if (!this.clouds.length && !this.isPushingCloud) {
+         if (!this.isPushingCloud) {
           this.isPushingCloud = true;
           setTimeout(() => {
-            this.clouds.push(new Cloud(this.gameScreen));
+            this.createCloud();
             this.isPushingCloud = false;
-          }, 500);
+          }, 2000);
         }
+        
     
 
     // CHECK FOR COLLISIONS WITH BONUS
@@ -247,6 +256,7 @@ class Game {
 
     // Stop background music  
     this.backgroundMusic.pause();
+    this.dmgSound.play();
     this.lossSound.play();
 
     // Hide the current game screen

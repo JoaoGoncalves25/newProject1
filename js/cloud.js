@@ -6,12 +6,12 @@ class Cloud {
       this.top = Math.floor(Math.random() * 288 );
   
       this.left = 822;
-      this.width = 150;
-      this.height = 150;
+      this.width = 125;
+      this.height = 100;
   
       // create the HTML element and create default styling
       this.element = document.createElement("img");
-      this.element.src = "./images/noFeed.png";
+      this.element.src = "./images/hawk.png";
       this.element.style.position = "absolute";
       this.element.style.width = `${this.width}px`;
       this.element.style.height = `${this.height}px`;
