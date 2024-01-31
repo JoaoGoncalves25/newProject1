@@ -1,4 +1,4 @@
-class Obstacle {
+class Tram {
   constructor(gameScreen) {
     this.gameScreen = gameScreen;
 

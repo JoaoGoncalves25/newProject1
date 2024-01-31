@@ -14,7 +14,7 @@
         <img src="./images/pidgeon.png" alt="" class="logo-img" />
         <br />
         <button id="start-button">Start Game</button>
-        <p>Press Space to survive</p>
+        <p>Use the Space bar to take flight!</p>
         <img src="./images/spaceBar.png" alt="" class="arrows-img" />
       </div>
 
@@ -23,20 +23,24 @@
           <h2>Stats</h2>
           <p>Score: <span id="score">0</span></p>
           <p>Lives: <span id="lives">3</span></p>
-          <p>Highest Score: <span id="high-score">0</span></p>
         </div>
-
-        <!-- #game-screen is initially hidden using CSS style display: none -->
-        <div id="game-screen"></div>
-        <audio id="background-music" src="sound/fado.mp3"></audio>
-        <audio id="wings-sfx" src="sound/wingFlap.mp3"></audio>
-        <audio id="hit-sfx" src="sound/splat.mp3"></audio>
-      </div>
+          <!-- #game-screen is initially hidden using CSS style display: none -->
+          <div id="game-screen"></div>
+          <audio id="background-music" src="sound/fado.mp3"></audio>
+          <audio id="wings-sfx" src="sound/wingFlap.mp3"></audio>
+          <audio id="hit-sfx" src="sound/splat.mp3"></audio>
+          <audio id="emo-dmg" src="sound/emotional-damage.mp3"></audio>
+          <audio id="violin-sfx" src="sound/sadViolin.mp3"></audio>
+          <audio id="win-sfx" src="sound/yeahBoii.mp3"></audio>
+          <audio id="patada" src="sound/patada.mp3"></audio>
+          <audio id="espetaculo" src="sound/espetaculo.mp3"></audio>
+          <audio id="perdeu" loop src="sound/perdeu.mp3"></audio>
+        </div>
 
       <!-- #game-end is initially hidden using CSS style display: none -->
       <div id="game-end">
-        <img src="./images/gameOver.png" alt="" class="logo-img" />
-        <h1>You died</h1>
+        <div class="tenor-gif-embed" data-postid="3915565" data-share-method="host" data-aspect-ratio="1.77778" data-width="100%"><a href="https://tenor.com/view/the-office-spill-chili-pot-kevin-malone-gif-3915565">Spilled Chili - The Office GIF</a>from <a href="https://tenor.com/search/the+office-gifs">The Office GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        <h1>Don't quit your day job</h1>
         <br />
         <button id="restart-button">Wanna go again?</button>
       </div>
@@ -44,8 +48,9 @@
 
 
     <script type="text/javascript" src="js/obstacle.js"></script>
+    <script type="text/javascript" src="js/bonus.js"></script>
     <script type="text/javascript" src="js/cloud.js"></script>
-    <script type="text/javascript"  src="js/player.js"></script>
+    <script type="text/javascript" src="js/player.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
   </body>

@@ -5,8 +5,7 @@ class Game {
     this.startScreen = document.getElementById("game-intro");
     this.gameScreen = document.getElementById("game-screen");
     this.gameEndScreen = document.getElementById("game-end");
-    
-    
+
     // I am going to create a player in the future. For this moment of the code-along, I'll leave it to null.
     this.player = new Player(
       this.gameScreen,
@@ -22,44 +21,51 @@ class Game {
     this.width = 822;
 
     // Obstacles
-    this.obstacles = [];
+    this.trams = [];
 
     this.clouds = [];
+    
+    this.bonuses = [];
 
     // Score
     this.score = 0;
-
-    let highestScore = localStorage.getItem("highestScore");
-    let highScore = document.getElementById("high-score");
-    highScore.innerHTML = highestScore;
-    if (!highestScore || highestScore && this.score > highestScore) {
-        localStorage.setItem("highestScore", this.score);}
-
 
     // Lives
     this.lives = 3;
 
     // Variable to Check If I'm in the Process of Creating an Obstacle
-    this.isPushingObstacle = false;
+    this.isPushingTram = false;
     this.isPushingCloud = false;
+    this.isPushingBonus = false;
 
     // Variable to Check if the Game is Over
     this.gameIsOver = false;
 
     // Sound
-  this.backgroundMusic = document.querySelector("#background-music")
-  this.hitSound = document.querySelector("#hit-sfx")
+    this.backgroundMusic = document.querySelector("#background-music");
+    this.hitSound = document.querySelector("#hit-sfx");
+    this.dmgSound = document.querySelector("#emo-dmg");
+    this.lossSound = document.querySelector("#violin-sfx");
+    this.winSound = document.querySelector("#win-sfx");
+    this.patadaSound = document.querySelector("#patada");
+    this.espetaculoSound = document.querySelector("#espetaculo");
+    this.perdeuSound = document.querySelector("#perdeu");
   }
 
-  createObstacle() {
-    this.obstacles.push(new Obstacle(this.gameScreen));
+  createTram() {
+    this.trams.push(new Tram(this.gameScreen));
   }
 
   createCloud() {
     this.clouds.push(new Cloud(this.gameScreen));
   }
 
+  createBonus() {
+    this.bonuses.push(new Bonus(this.gameScreen));
+  }
+
   start() {
+
     //Sets the height and width of the game screen.
     this.gameScreen.style.height = `${this.height}px`;
     this.gameScreen.style.width = `${this.width}px`;
@@ -70,11 +76,21 @@ class Game {
     //Shows the game screen.
     this.gameScreen.style.display = "block";
 
+    //Background music
     this.backgroundMusic.play();
-    this.backgroundMusic.volume = 0.5;
 
     //Starts the game loop
     this.gameLoop();
+
+
+// STAR
+    // pushes one star in a static location
+    // included in start() method so it only pushes one star at a time 
+    setInterval(() => {
+      this.bonuses.push(new Bonus(this.gameScreen));
+      this.isPushingBonus = false;
+    }, 1500);
+
   }
 
   gameLoop() {
@@ -83,7 +99,6 @@ class Game {
     }
  
     this.update();
-    this.updateCloud();
 
     if(this.lives===0){
       this.endGame();
@@ -93,115 +108,159 @@ class Game {
   }
 
   update() {
-    /* Score, Lives ScoreBoard */
-    let score = document.getElementById("score");
-    let lives = document.getElementById("lives");
-  
-    /* Every Frame of the Game, I want to check if the player is moving */
-    this.player.move();
-  
-    // Iterate over the obstacles array and make them move
-    for (let i = 0; i < this.obstacles.length; i++) {
-      const obstacle = this.obstacles[i];
-      obstacle.move();
-  
-      if (this.player.didCollide(obstacle)) {
-        this.hitSound.play();
-        obstacle.element.remove();
-        this.obstacles.splice(i, 1);
-        this.lives--;
-      } else if (obstacle.left === -300) {
-        this.score++;
-  
-        // Remove the Obstacle HTML Element from the HTML.
-        obstacle.element.remove();
-  
-        // Remove the Obstacle from the Game Class'obstacles array.
-        this.obstacles.splice(i, 1);
-      }
-    }
-  
-    // Generate new obstacle periodically
-    if (!this.isPushingObstacle) {
-      this.isPushingObstacle = true;
-      setTimeout(() => {
-        this.createObstacle();
-        this.isPushingObstacle = false;
-      }, 1200); // Adjust the time interval as needed
-    }
-  
-    score.innerHTML = this.score;
-    lives.innerHTML = this.lives;
-  }
-  
-
-  updateCloud() {
     let score = document.getElementById("score");
     let lives = document.getElementById("lives");
 
-    this.player.move();
-
-    for (let i = 0; i < this.clouds.length; i++) {
-      const cloud = this.clouds[i];
-      cloud.move();
-
-      if (this.player.didCollide(cloud)) {
-        this.hitSound.play();
-        cloud.element.remove();
-        this.clouds.splice(i, 1);
-        this.lives--;
-      } else if (cloud.left === -300) {
-        this.score++;
-
-        cloud.element.remove();
-
-        this.clouds.splice(i, 1);
-      }
-    }
-
-    if (!this.clouds.length) {
-      this.createCloud();
-    }
-
     score.innerHTML = this.score;
     lives.innerHTML = this.lives;
+
+    if (this.lives === 0) {
+      this.endGame();
+    }
+    
+
+    this.player.move();
+
+    // CHECK FOR COLLISIONS WITH TRAM
+
+   // Iterate over the obstacles array and make them move
+   for (let i = 0; i < this.trams.length; i++) {
+    const tram = this.trams[i];
+    tram.move();
+
+    if (this.player.didCollide(tram)) {
+      this.hitSound.play();
+      tram.element.remove();
+      this.trams.splice(i, 1);
+      this.lives--;
+    } else if (tram.left === -300) {
+
+      // Remove the Obstacle HTML Element from the HTML.
+      tram.element.remove();
+
+      // Remove the Obstacle from the Game Class'obstacles array.
+      this.trams.splice(i, 1);
+    }
   }
 
+  // Generate new obstacle periodically
+  if (!this.isPushingTram) {
+    this.isPushingTram = true;
+    setTimeout(() => {
+      this.createTram();
+      this.isPushingTram = false;
+    }, 1200); // Adjust the time interval as needed
+  }
+
+  
+        // CHECK FOR COLLISIONS WITH cloud
+        for (let i = 0; i < this.clouds.length; i++) {
+          const singleCloud = this.clouds[i];
+          singleCloud.move();
+    
+          if (this.player.didCollide(singleCloud)) {
+
+            // music for the cloud
+            this.dmgSound.play();
+            
+            // remove the obstacle from the DOM
+            singleCloud.element.remove();
+    
+            // remove the obstacle from the array
+            this.clouds.splice(i, 1);
+    
+            // reduce lives by one
+            this.lives--;
+    
+            // check if the obstacle id off the screen at the bottom
+          } else if (singleCloud.left === -300) {
+            // remove the obstacle from the HTML
+            singleCloud.element.remove();
+            // remove the obstales from the array of obstacles
+            this.clouds.splice(i, 1);
+          }
+        }
+    
+        //The function below checks if there is no obstacle being pushed (false) and that no obstacles are currently on the screen (this.obstacles = 0) If these are true, then the following happens (the flag to true, a new Object class of obstacle is created and added to the this.obstacles array, and the flag is turned back to false)
+        if (!this.clouds.length && !this.isPushingCloud) {
+          this.isPushingCloud = true;
+          setTimeout(() => {
+            this.clouds.push(new Cloud(this.gameScreen));
+            this.isPushingCloud = false;
+          }, 500);
+        }
+    
+
+    // CHECK FOR COLLISIONS WITH BONUS
+
+    for (let i = 0; i < this.bonuses.length; i++) {
+      const singleBonus = this.bonuses[i];
+      singleBonus.move();
+
+      if (this.player.didCollide(singleBonus)) {
+        if (this.bonuses) {
+          console.log("crashed with a star");
+
+          // music for the star
+          this.espetaculoSound.play();
+
+          //remove obstacle from DOM
+          singleBonus.element.remove();
+
+          // remove obstacle from array
+          this.bonuses.splice(i, 1);
+
+          this.score++;
+        }
+      }
+    }
+    
+
+
+
+  }
   endGame() {
     //Change the gameIsOver status, if it's true, remember that this is going to break the animation loop
     this.gameIsOver = true;
+
     // Remove Player
     this.player.element.remove();
-    // Remove all obstacles
-    this.obstacles.forEach((obstacle) => {
-      // Remove the Obstacle from JS
 
-      // Remove the obstacle from HTML
-      obstacle.element.remove();
+    // Remove the tram from JS
+    this.trams.forEach((tram) => {
+  
+    // Remove the tram from HTML
+      tram.element.remove();
     });
 
-     this.clouds.forEach((cloud)=>{
-      // Remove the Obstacle from JS
+    // Remove the cloud from JS
+    this.clouds.forEach((cloud) => {
 
-      // Remove the obstacle from HTML
-      cloud.element.remove()
-      }); 
+      // Remove the cloud from HTML
+        cloud.element.remove();
+      });
+
+      // Remove the bonus from JS
+    this.bonuses.forEach((bonus) => {
+  
+      // Remove the bonus from HTML
+        bonus.element.remove();
+      });
 
     // Stop background music  
     this.backgroundMusic.pause();
+    this.lossSound.play();
 
     // Hide the current game screen
     this.gameScreen.style.display = "none";
-    
+
     // In order, to display the game end screen
     this.gameEndScreen.style.display = "block";
 
     // Display High Score
     const highestScore = localStorage.getItem("highestScore");
-    let highScore = document.getElementById("high-score");
-    highScore.innerHTML = highestScore;
-    if (!highestScore || highestScore && this.score > highestScore) {
-        localStorage.setItem("highestScore", this.score);}
-
+        if (!highestScore || highestScore && this.score > highestScore) {
+            localStorage.setItem("highestScore", this.score);
+        }
   }
 }

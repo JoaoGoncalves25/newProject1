@@ -1,3 +1,7 @@
+*{
+  font-family: 'Segoe UI';
+}
+
 body {
   padding: 0;
   text-align: center;
@@ -63,4 +67,10 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+.tenor-gif-embed{
+  display: block;
+  margin: auto;
+  max-width: 40%;
 }
