@@ -30,6 +30,7 @@ class Game {
     // Score
     this.score = 0;
 
+    this.time = 0;
     // Lives
     this.lives = 3;
 
@@ -66,6 +67,8 @@ class Game {
     this.gameScreen.style.height = `${this.height}px`;
     this.gameScreen.style.width = `${this.width}px`;
 
+    this.startTimer();
+
     //Hides the start screen.
     this.startScreen.style.display = "none";
     this.gameEndScreen.style.display = "none";
@@ -88,6 +91,8 @@ class Game {
       this.isPushingBonus = false;
     }, 1250);
 
+    
+
   }
 
   gameLoop() {
@@ -95,7 +100,12 @@ class Game {
       return;
     }
  
+    this.getMinutes();
+    this.getSeconds();
+
+
     this.update();
+    this.updateStats();
 
     if(this.lives===-1){
       this.endGame();
@@ -250,6 +260,15 @@ class Game {
 
     // Stop background music  
     this.backgroundMusic.pause();
+
+
+    this.stopTimer();
+
+  
+
+
+
+
   
     // Hide the current game screen
     this.gameScreen.style.display = "none";
@@ -267,4 +286,48 @@ class Game {
     
     }
   }
+  updateStats() {
+    // update inner texts of Stats: time & score
+    const time = document.getElementById('time');
+    const score = document.getElementById('score');
+    time.innerText = `${this.timeInMinutes}:${this.timeInSeconds}`;
+    score.innerText = this.score;
+  }
+
+  // function to count time
+  startTimer() {
+    this.intervalId = setInterval(() => {
+      // increment the time by 1 second
+      this.time += 1;
+    }, 1000);
+
+    return this.time;
+  }
+
+  getMinutes() {
+    this.minutes = Math.floor(this.time / 60);
+    return (this.timeInMinutes = this.computeTwoDigitNumber(this.minutes));
+  }
+
+  getSeconds() {
+    this.remainingSeconds = Math.floor(this.time % 60);
+    return (this.timeInSeconds = this.computeTwoDigitNumber(
+      this.remainingSeconds
+    ));
+  }
+
+  computeTwoDigitNumber(value) {
+    // convert any number into a two-digits string representation
+    if (value < 10) {
+      return '0' + value.toString();
+    } else {
+      return value.toString();
+    }
+  }
+
+  stopTimer() {
+    // clear the existing interval timer
+    clearInterval(this.intervalId);
+  }
 }
+

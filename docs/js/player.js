@@ -8,7 +8,7 @@ class Player {
     this.top = top/2 + 25;
 
     // Player Dimension Values
-    this.width = 150;
+    this.width = 120;
     this.height = 50;
 
     this.element = document.createElement("img");

@@ -23,11 +23,12 @@
           <p>Score: <span id="score">0</span></p>
           <p>Lives: <span id="lives">3</span></p>
           <p>High Score: <span id="high-score">0</span></p>
+          <p>Time Elapsed: <span id="time" class="number small-number"> 0</span>
         </div>
         <!-- #game-screen is initially hidden using CSS style display: none -->
         <div id="game-screen"></div>
         <audio id="background-music" src="./docs/sound/jaws.mp3"></audio>
-        <audio id="wings-sfx" src="./docs/sound/wingFlap.mp3"></audio>
+        <audio id="wings-sfx" src="./docs/sound/bubbles.mp3"></audio>
         <audio id="hit-sfx" src="./docs/sound/chomp.mp3"></audio>
         <audio id="bonus" src="./docs/sound/bonus.mp3"></audio>
         <audio id="hawk" loop src="./docs/sound/boom.mp3"></audio>
@@ -35,6 +36,7 @@
 
       <!-- #game-end is initially hidden using CSS style display: none -->
       <div id="game-end">
+        
         <img src="./docs/images/sub.png" alt="blood-splat" class="logo-img" />
         <br />
         <button id="restart-button">Wanna go again?</button>

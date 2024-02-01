@@ -59,7 +59,7 @@ window.onload = function () {
       if (game) {
         switch (key) {
           case " ":
-            game.player.directionY = 0.50;
+            game.player.directionY = 1;
             break;
         }
       }
