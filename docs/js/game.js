@@ -13,7 +13,7 @@ class Game {
       500,
       100,
       150,
-      "./images/sub.png"
+      "./docs/images/sub.png"
     );
 
     // Style for the Game Board

@@ -4,18 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="docs/styles/style.css" />
+    <link rel="stylesheet" href="./docs/styles/style.css" />
     <title>Underwater submarine</title>
   </head>
   <body>
     <main>
       <!-- #game-intro is initially shown on the game start screen -->
       <div id="game-intro">
-        <img src="docs/images/sub.png" alt="blood-splat" class="logo-img" />
+        <img src="./docs/images/sub.png" alt="blood-splat" class="logo-img" />
         <br />
         <button id="start-button">Start Game</button>
         <p id="spacebar">Use the Space bar to take flight!</p>
-        
       </div>
 
       <article id="game-container">
@@ -25,29 +24,28 @@
           <p>Lives: <span id="lives">3</span></p>
           <p>High Score: <span id="high-score">0</span></p>
         </div>
-          <!-- #game-screen is initially hidden using CSS style display: none -->
-          <div id="game-screen"></div>
-          <audio id="background-music" src="docs/sound/jaws.mp3"></audio>
-          <audio id="wings-sfx" src="docs/sound/wingFlap.mp3"></audio>
-          <audio id="hit-sfx" src="docs/sound/chomp.mp3"></audio>
-          <audio id="bonus" src="docs/sound/bonus.mp3"></audio>
-          <audio id="hawk" loop src="docs/sound/boom.mp3"></audio>
+        <!-- #game-screen is initially hidden using CSS style display: none -->
+        <div id="game-screen"></div>
+        <audio id="background-music" src="./docs/sound/jaws.mp3"></audio>
+        <audio id="wings-sfx" src="./docs/sound/wingFlap.mp3"></audio>
+        <audio id="hit-sfx" src="./docs/sound/chomp.mp3"></audio>
+        <audio id="bonus" src="./docs/sound/bonus.mp3"></audio>
+        <audio id="hawk" loop src="./docs/sound/boom.mp3"></audio>
       </article>
 
       <!-- #game-end is initially hidden using CSS style display: none -->
       <div id="game-end">
-        <img src="docs/images/sub.png" alt="blood-splat" class="logo-img" />
-        <br/>
+        <img src="./docs/images/sub.png" alt="blood-splat" class="logo-img" />
+        <br />
         <button id="restart-button">Wanna go again?</button>
       </div>
     </main>
 
-
-    <script type="text/javascript" src="js/obstacle.js"></script>
-    <script type="text/javascript" src="js/bonus.js"></script>
-    <script type="text/javascript" src="js/cloud.js"></script>
-    <script type="text/javascript" src="js/player.js"></script>
-    <script type="text/javascript" src="js/game.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="./docs/js/obstacle.js"></script>
+    <script type="text/javascript" src="./docs/js/bonus.js"></script>
+    <script type="text/javascript" src="./docs/js/cloud.js"></script>
+    <script type="text/javascript" src="./docs/js/player.js"></script>
+    <script type="text/javascript" src="./docs/js/game.js"></script>
+    <script type="text/javascript" src="./docs/js/script.js"></script>
   </body>
 </html>
