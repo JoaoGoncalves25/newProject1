@@ -222,6 +222,15 @@ class Game {
           this.bonuses.splice(i, 1);
 
           this.score++;
+        }else if (singleBonus.left === -50) {
+
+            // remove the obstacle from the HTML
+            singleBonus.element.remove();
+            
+            
+            // remove the obstales from the array of obstacles
+            this.bonuses.splice(i, 1);
+          }
         }
       }
     }
@@ -229,7 +238,7 @@ class Game {
 
 
 
-  }
+  
   endGame() {
     //Change the gameIsOver status, if it's true, remember that this is going to break the animation loop
     this.gameIsOver = true;
