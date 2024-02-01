@@ -5,6 +5,7 @@
 body {
   padding: 0;
   text-align: center;
+  background-image: url(../images/sea.png);
 }
 
 #game-intro {
@@ -24,7 +25,7 @@ body {
   padding: 20px 0px;
   overflow: hidden;
   position: relative;
-  background-image: url(../images/lisbon.png);
+  background-image: url(../images/sea3.png);
   background-size: cover;
   border-radius: 15px;
 }
@@ -52,6 +53,7 @@ body {
 
 .logo-img {
   width: 300px;
+  padding: 50px;
 }
 
 .arrows-img {

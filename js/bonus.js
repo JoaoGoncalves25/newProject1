@@ -3,7 +3,7 @@ class Bonus {
       this.gameScreen = gameScreen;
   
       // Random Position
-      this.top = Math.floor(Math.random() * 330 );
+      this.top = Math.floor(Math.random() * 330 + 100);
   
       this.left = 822;
       this.width = 50;
@@ -11,7 +11,7 @@ class Bonus {
   
       // create the HTML element and create default styling
       this.element = document.createElement("img");
-      this.element.src = "./images/pastel.png";
+      this.element.src = "./images/bonus.png";
       this.element.style.position = "absolute";
       this.element.style.width = `${this.width}px`;
       this.element.style.height = `${this.height}px`;

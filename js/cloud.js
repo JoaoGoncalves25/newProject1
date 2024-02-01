@@ -7,11 +7,11 @@ class Cloud {
   
       this.left = 822;
       this.width = 125;
-      this.height = 100;
+      this.height = 125;
   
       // create the HTML element and create default styling
       this.element = document.createElement("img");
-      this.element.src = "./images/hawk.png";
+      this.element.src = "./images/mine.png";
       this.element.style.position = "absolute";
       this.element.style.width = `${this.width}px`;
       this.element.style.height = `${this.height}px`;
@@ -23,7 +23,7 @@ class Cloud {
   
     move() {
       // Move obstacle down
-      this.left -= 1;
+      this.left -= 2;
   
       this.updatePosition();
     }

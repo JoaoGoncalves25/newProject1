@@ -13,7 +13,7 @@ class Game {
       500,
       100,
       150,
-      "./images/pidgeon.png"
+      "./images/sub.png"
     );
 
     // Style for the Game Board
@@ -73,7 +73,7 @@ class Game {
     this.gameScreen.style.display = "block";
 
     //Background music
-   /* this.backgroundMusic.play(); */
+   this.backgroundMusic.play();
 
     //Starts the game loop
     this.gameLoop();
@@ -188,7 +188,7 @@ class Game {
           setTimeout(() => {
             this.createCloud();
             this.isPushingCloud = false;
-          }, 2000);
+          }, 1500);
         }
         
     

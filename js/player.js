@@ -4,12 +4,12 @@ class Player {
     this.gameScreen = gameScreen;
 
     // Position Values
-    this.left = 255;
+    this.left = 75;
     this.top = top/2 + 25;
 
     // Player Dimension Values
-    this.width = 75;
-    this.height = 75;
+    this.width = 150;
+    this.height = 50;
 
     this.element = document.createElement("img");
     this.element.src = imgSrc;
