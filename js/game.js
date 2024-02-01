@@ -43,14 +43,9 @@ class Game {
 
     // Sound
     this.backgroundMusic = document.querySelector("#background-music");
-    this.hitSound = document.querySelector("#hit-sfx");
-    this.dmgSound = document.querySelector("#emo-dmg");
-    this.lossSound = document.querySelector("#violin-sfx");
-    this.winSound = document.querySelector("#win-sfx");
-    this.patadaSound = document.querySelector("#patada");
-    this.espetaculoSound = document.querySelector("#espetaculo");
-    this.perdeuSound = document.querySelector("#perdeu");
+    this.tramSound = document.querySelector("#hit-sfx");
     this.hawkSound = document.querySelector("#hawk");
+    this.bonusSound = document.querySelector("#bonus");
   }
 
   createTram() {
@@ -91,7 +86,7 @@ class Game {
     setInterval(() => {
       this.bonuses.push(new Bonus(this.gameScreen));
       this.isPushingBonus = false;
-    }, 1500);
+    }, 1250);
 
   }
 
@@ -122,7 +117,6 @@ class Game {
       this.endGame();
     }
     
-
     this.player.move();
 
     // CHECK FOR COLLISIONS WITH TRAM
@@ -133,7 +127,7 @@ class Game {
     tram.move();
 
     if (this.player.didCollide(tram)) {
-      this.hitSound.play();
+      this.tramSound.play();
       tram.element.remove();
       this.trams.splice(i, 1);
       this.lives--;
@@ -208,8 +202,8 @@ class Game {
       if (this.player.didCollide(singleBonus)) {
         if (this.bonuses) {
 
-          // music for the star
-          this.espetaculoSound.play();
+          // music for the bonus
+          this.bonusSound.play();
 
           //remove obstacle from DOM
           singleBonus.element.remove();
@@ -256,9 +250,7 @@ class Game {
 
     // Stop background music  
     this.backgroundMusic.pause();
-    this.dmgSound.play();
-    this.lossSound.play();
-
+  
     // Hide the current game screen
     this.gameScreen.style.display = "none";
 
