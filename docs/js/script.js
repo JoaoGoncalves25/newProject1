@@ -11,7 +11,7 @@ window.onload = function () {
     startGame();
   });
 
-///// Restart game using the Spacebar///////////////////////////////////////////////////
+  // Restart game using the Spacebar
     restartButton.addEventListener("click", function(){
       game = new Game();
       game.start();
@@ -24,7 +24,6 @@ window.onload = function () {
         game.start();
       }
     });
-//////////////////////////////////////////////////////////////////////////////////////////
 
   function startGame() {
     // console.log("start game");
