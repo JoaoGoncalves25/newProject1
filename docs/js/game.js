@@ -13,7 +13,7 @@ class Game {
       500,
       100,
       150,
-      "./docs/images/sub.png"
+      "./docs/images/sub3.png"
     );
 
     // Style for the Game Board
@@ -22,15 +22,15 @@ class Game {
 
     // Obstacles
     this.trams = [];
+
     this.clouds = [];
+    
     this.bonuses = [];
 
     // Score
     this.score = 0;
 
-    // Time
     this.time = 0;
-
     // Lives
     this.lives = 3;
 
@@ -72,7 +72,6 @@ class Game {
     //Hides the start screen.
     this.startScreen.style.display = "none";
     this.gameEndScreen.style.display = "none";
-
     //Shows the game screen.
     this.gameScreen.style.display = "block";
 
@@ -91,6 +90,9 @@ class Game {
       this.bonuses.push(new Bonus(this.gameScreen));
       this.isPushingBonus = false;
     }, 1250);
+
+    
+
   }
 
   gameLoop() {
@@ -100,6 +102,8 @@ class Game {
  
     this.getMinutes();
     this.getSeconds();
+
+
     this.update();
     this.updateStats();
 
@@ -125,12 +129,13 @@ class Game {
     
     this.player.move();
 
+    // CHECK FOR COLLISIONS WITH TRAM
+
    // Iterate over the obstacles array and make them move
    for (let i = 0; i < this.trams.length; i++) {
     const tram = this.trams[i];
     tram.move();
 
-    // Tram touch
     if (this.player.didCollide(tram)) {
       this.tramSound.play();
       tram.element.remove();
@@ -138,64 +143,67 @@ class Game {
       this.lives--;
     } else if (tram.left === -300) {
 
-    // Remove the Obstacle HTML Element from the HTML.
+      // Remove the Obstacle HTML Element from the HTML.
       tram.element.remove();
 
-     // Remove the Obstacle from the Game Class'obstacles array.
+      // Remove the Obstacle from the Game Class'obstacles array.
       this.trams.splice(i, 1);
     }
   }
 
-    // Generate new obstacle periodically
-     if (!this.isPushingTram) {
-      this.isPushingTram = true;
-       setTimeout(() => {
-       this.createTram();
-        this.isPushingTram = false;
-      }, 1200);
+  // Generate new obstacle periodically
+  if (!this.isPushingTram) {
+    this.isPushingTram = true;
+    setTimeout(() => {
+      this.createTram();
+      this.isPushingTram = false;
+    }, 1200); // Adjust the time interval as needed
   }
 
-    // Cloud touch
-    for (let i = 0; i < this.clouds.length; i++) {
-      const singleCloud = this.clouds[i];
-      singleCloud.move();
+        // CHECK FOR COLLISIONS WITH cloud
+        for (let i = 0; i < this.clouds.length; i++) {
+          const singleCloud = this.clouds[i];
+          singleCloud.move();
           
-      if (this.player.didCollide(singleCloud)) {
+          if (this.player.didCollide(singleCloud)) {
             
-       // music for the cloud
-        this.hawkSound.loop= false;
-        this.hawkSound.play();
+            // music for the cloud
+            this.hawkSound.loop= false;
+            this.hawkSound.play();
             
-       // remove the obstacle from the DOM
-         singleCloud.element.remove();
+            // remove the obstacle from the DOM
+            singleCloud.element.remove();
     
-      // remove the obstacle from the array
-        this.clouds.splice(i, 1);
+            // remove the obstacle from the array
+            this.clouds.splice(i, 1);
     
-      // reduce lives by one
-        this.lives--;
+            // reduce lives by one
+            this.lives--;
     
-      // check if the obstacle id off the screen at the bottom
-         } else if (singleCloud.left === -300) {
+            // check if the obstacle id off the screen at the bottom
+          } else if (singleCloud.left === -300) {
 
-      // remove the obstacle from the HTML
+            // remove the obstacle from the HTML
             singleCloud.element.remove();
             
-      // remove the obstales from the array of obstacles
-        this.clouds.splice(i, 1);
+            
+            // remove the obstales from the array of obstacles
+            this.clouds.splice(i, 1);
+          }
         }
-      }
     
-      //The function below checks if there is no obstacle being pushed (false) and that no obstacles are currently on the screen (this.obstacles = 0) If these are true, then the following happens (the flag to true, a new Object class of obstacle is created and added to the this.obstacles array, and the flag is turned back to false)
-       if (!this.isPushingCloud) {
-        this.isPushingCloud = true;
-        setTimeout(() => {
-        this.createCloud();
-        this.isPushingCloud = false;
-      }, 1500);
-    }
+        //The function below checks if there is no obstacle being pushed (false) and that no obstacles are currently on the screen (this.obstacles = 0) If these are true, then the following happens (the flag to true, a new Object class of obstacle is created and added to the this.obstacles array, and the flag is turned back to false)
+         if (!this.isPushingCloud) {
+          this.isPushingCloud = true;
+          setTimeout(() => {
+            this.createCloud();
+            this.isPushingCloud = false;
+          }, 1500);
+        }
         
-    // Bonus touch
+    
+
+    // CHECK FOR COLLISIONS WITH BONUS
 
     for (let i = 0; i < this.bonuses.length; i++) {
       const singleBonus = this.bonuses[i];
@@ -204,28 +212,24 @@ class Game {
       if (this.player.didCollide(singleBonus)) {
         if (this.bonuses) {
 
-      // music for the bonus
-        this.bonusSound.play();
+          // music for the bonus
+          this.bonusSound.play();
 
-      //remove obstacle from DOM
-        singleBonus.element.remove();
+          //remove obstacle from DOM
+          singleBonus.element.remove();
 
-      // remove obstacle from array
-        this.bonuses.splice(i, 1);
+          // remove obstacle from array
+          this.bonuses.splice(i, 1);
 
-        this.score++;
-      }else if (singleBonus.left === -50) {
-
-      // remove the obstacle from the HTML
-        singleBonus.element.remove();
-            
-      // remove the obstales from the array of obstacles
-        this.bonuses.splice(i, 1);
+          this.score++;
         }
       }
     }
-  }
     
+
+
+
+  }
   endGame() {
     //Change the gameIsOver status, if it's true, remember that this is going to break the animation loop
     this.gameIsOver = true;
@@ -243,22 +247,28 @@ class Game {
     // Remove the cloud from JS
     this.clouds.forEach((cloud) => {
 
-    // Remove the cloud from HTML
+      // Remove the cloud from HTML
         cloud.element.remove();
       });
 
-    // Remove the bonus from JS
+      // Remove the bonus from JS
     this.bonuses.forEach((bonus) => {
   
-    // Remove the bonus from HTML
+      // Remove the bonus from HTML
         bonus.element.remove();
       });
 
     // Stop background music  
     this.backgroundMusic.pause();
 
-    // Stop timer
+
     this.stopTimer();
+
+  
+
+
+
+
   
     // Hide the current game screen
     this.gameScreen.style.display = "none";
@@ -276,19 +286,18 @@ class Game {
     
     }
   }
-
+  updateStats() {
     // update inner texts of Stats: time & score
-    updateStats() {
-      const time = document.getElementById('time');
-      const score = document.getElementById('score');
-      time.innerText = `${this.timeInMinutes}:${this.timeInSeconds}`;
-     score.innerText = this.score;
-    }
+    const time = document.getElementById('time');
+    const score = document.getElementById('score');
+    time.innerText = `${this.timeInMinutes}:${this.timeInSeconds}`;
+    score.innerText = this.score;
+  }
 
   // function to count time
-    startTimer() {
-      this.intervalId = setInterval(() => {
-  // increment the time by 1 second
+  startTimer() {
+    this.intervalId = setInterval(() => {
+      // increment the time by 1 second
       this.time += 1;
     }, 1000);
 
@@ -307,18 +316,18 @@ class Game {
     ));
   }
 
-  // convert any number into a two-digits string representation
-    computeTwoDigitNumber(value) {
-      if (value < 10) {
+  computeTwoDigitNumber(value) {
+    // convert any number into a two-digits string representation
+    if (value < 10) {
       return '0' + value.toString();
-      } else {
+    } else {
       return value.toString();
-      }
-    }
-
-  // clear the existing interval timer
-    stopTimer() {
-    clearInterval(this.intervalId);
     }
   }
+
+  stopTimer() {
+    // clear the existing interval timer
+    clearInterval(this.intervalId);
+  }
+}
 
